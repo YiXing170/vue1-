@@ -16,16 +16,24 @@ import MVue from './index';
 //     }
 // });
 
-MVue.mixin({   // 这个被合进全局options 了
-    data: function () {
-        return {
-            name: 'yutao',
-            age: 18,
-        }
-    }
-});
+// MVue.mixin({   // 这个被合进全局options 了
+//     data: function () {
+//         return {
+//             name: 'yutao',
+//             age: 18,
+//         }
+//     }
+// });
 
 window.vm = new MVue({
+    mixins: {
+        data: function () {
+            return {
+                name: 'yutao',
+                age: 18,
+            }
+        }
+    },
     data () {
         return {
             count: 1,

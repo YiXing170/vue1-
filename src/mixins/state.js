@@ -1,19 +1,19 @@
 import observe from '../observer';
 import { bind } from '../utils';
 
-function initProps() {
+function initProps () {
     console.log('init props');
 }
 
-function initMethods() {
+function initMethods () {
     const { $options: { methods } } = this;
     Object.keys(methods).forEach(key => {
-        this[key] = bind(methods[key], this);
+        this[key] = bind(methods[key], this);  // 将methed遍历到this实例上
     });
 }
 
-function initData() {
-    let data = this.$options.data || function() { return {} };
+function initData () {
+    let data = this.$options.data || function () { return {} };
     if (typeof data !== 'function') {
         throw new TypeError('options data should be a function');
     }
@@ -26,28 +26,30 @@ function initData() {
     observe(this._data);
 }
 
-function initComputed() {
+function initComputed () {
 
 }
 
-function initWatch() {
+function initWatch () {
 
 }
 
-function proxy(target, sourceKey, key) {
+// this,'_data' 'data中的每一个数据key'
+// proxy做中转，但确实也在this实例上增添了属性
+function proxy (target, sourceKey, key) {
     Object.defineProperty(target, key, {
         enumerable: true,
         configurable: true,
-        get: function proxyGetter() {
+        get: function proxyGetter () {
             return this[sourceKey][key];
         },
-        set: function proxySetter(val) {
+        set: function proxySetter (val) {
             this[sourceKey][key] = val;
         }
     })
 }
 
-function initState() {
+function initState () {
     this._watchers = []; // 实例订阅对象
     const options = this.$options;
     if (options.props) {

@@ -24,10 +24,10 @@ function init (options) {
     // 合并参数
     options = this.$options = mergeOptions(
         this.constructor.options,  //全局options(也就是MVue.options)
-        options,  // 构造时传入的mergeOptions
+        options,  // 构造时传入的options
         this   // 当前实例
     );
-    console.log(options.data(), 'options')
+
     this._initMixins();  // 处理实例 mixins 配置
     this._callHook('beforeCreate');
     this._initState(); // Observer 处理
@@ -41,7 +41,7 @@ function init (options) {
 function initMixins () {
     if (this.$options.mixins) {
         const options = this.$options;
-        this.$options = mergeOptions(options, options.mixins);  // 这里的参数顺序好像有问题 应该是以组件的为准
+        this.$options = mergeOptions(options.mixins, options);  // 应该是以组件的为准
     }
 }
 
