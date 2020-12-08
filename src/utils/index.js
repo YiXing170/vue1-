@@ -95,7 +95,7 @@ export const RE = {
     on: /^(?:v-on:|@)/,
     bind: /^(?:v-bind:|:)/,
     dirAttr: /^v-([^:]+)(?:$|:(.*)$)/,
-    template: /\{\{((?:.|\n)+?)\}\}/g,
+    template: /\{\{((?:.|\n)+?)\}\}/g, //模板语法
     reservedTag: /^(slot|component)$/i,
     commonTag: /^(div|p|span|img|a|b|i|br|ul|ol|li|h1|h2|h3|h4|h5|h6|code|pre|table|th|td|tr|form|label|input|select|option|nav|article|section|header|footer|button|textarea)$/i,
 };

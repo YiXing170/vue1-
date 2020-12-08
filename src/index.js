@@ -8,11 +8,11 @@ import { useGlobal } from './global';
 import directives from './directive/directives';
 
 
-// 装饰原型  
+// 装饰原型函数  
 @mixins([
     init, //让每个实例获得特别的功能,原型获得_init 和_initMixins方法
-    state, // data props methods
-    lifecycle, //为实例披上生命周期函数
+    state, // 对 data props methods等做相应处理
+    lifecycle, //为实例披上生命周期函数，原型拥有callback('生命周期')方法
     render, // 等同于Compile处理
 ])
 class MVue {

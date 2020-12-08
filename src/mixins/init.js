@@ -30,7 +30,7 @@ function init (options) {
 
     this._initMixins();  // 处理实例 mixins 配置
     this._callHook('beforeCreate');
-    this._initState(); // Observer 处理
+    this._initState(); // Observer 处理 初始化method prop 等
     this._callHook('created');
     if (options.el) {
         this.$compile();

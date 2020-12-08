@@ -18,8 +18,12 @@ export default function observe (value) {
 这里先要分析清楚dep watcher  observer之间的关系
 observer用来 做关键的桥梁，利用属性描述符 get set  来连接dep 和 watch
 
-具体情况：利用observer对每一个属性做观测时，生成dep实例，编译template时，利用get时
+具体情况：利用observer对每一个属性做观测时，生成dep实例，编译template时，触发get，
+将dep实例添加到watcher中，与此同时，将watcher实例添加到dep的subs数组中,当触发set时，
+subs中的watcher也就收到通知，去做相应的更新
 
+
+所以可以将watcher 看做视图，将dep看做数据  将observer看做连接者(利用get和set)，连接dep(data中的数据)和 watcher(template中的视图需求)   
 */
 
 class Observer {

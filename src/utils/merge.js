@@ -64,8 +64,8 @@ export function mergeOptions (parent, child, vm) {
 }
 /**
  * 合并attrs
- * @param {*} fromNode 
- * @param {*} toNode 
+ * @param {*} fromNode el挂载节点
+ * @param {*} toNode  option传入的template
  */
 export function mergeAttrs (fromNode, toNode) {
     const attrs = fromNode.attributes;

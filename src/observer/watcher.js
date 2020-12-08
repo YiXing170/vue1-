@@ -8,7 +8,7 @@ let uid = 0;
 // 每个state对应一个Dep。所以该watcher需要订阅多个Dep
 export default class Watcher {
     constructor(vm, expOrFn, callback, options) {
-        this.id = uid ++;
+        this.id = uid++;
         // 收集到MVue实例到_watchers中
         vm._watchers.push(this);
 
@@ -50,13 +50,13 @@ export default class Watcher {
         }
     }
     // 获取exp的值，其实就是触发exp上state的getter
-    get() {
+    get () {
         const { vm } = this;
         Dep.target = this;
         let value;
         try {
             value = this.getter.call(vm, vm);
-        } catch(e) {
+        } catch (e) {
             value = void 0;
         }
 
@@ -68,11 +68,11 @@ export default class Watcher {
         return value;
     }
 
-    set(value) {
+    set (value) {
         this.setter.call(this.vm, value);
     }
 
-    update() {
+    update () {
         if (this.lazy) {
             this.dirty = true;
         } else if (!this.sync) {
@@ -83,7 +83,7 @@ export default class Watcher {
         }
     }
 
-    run() {
+    run () {
         const value = this.get();
         const oldValue = this.value;
         this.value = value;
@@ -92,7 +92,8 @@ export default class Watcher {
         }
     }
 
-    addDep(dep) {
+    // 将watcher加到dep的subs数组中
+    addDep (dep) {
         if (!this.depIds.includes(dep.id)) {
             this.deps.push(dep);
             this.depIds.push(dep.id);
@@ -101,13 +102,13 @@ export default class Watcher {
     }
 
     /* computed使用 start */
-    evaluate() {
+    evaluate () {
         const current = Dep.target;
         this.value = this.get();
         this.dirty = false;
         Dep.target = current;
     }
-    depend() {
+    depend () {
         this.deps.forEach(dep => {
             dep.depend();
         })
@@ -115,7 +116,7 @@ export default class Watcher {
     /* computed使用 end */
 }
 
-function parseExpression(exp) {
+function parseExpression (exp) {
     exp = exp.trim();
     const res = { exp };
     res.get = makeGetterFn(exp);

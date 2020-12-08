@@ -1,6 +1,29 @@
 import { getIn, extend } from "../utils";
 import Watcher from "../observer/watcher";
 
+
+/*
+descriptor: {
+      vm,
+      el,  // 真实dom引用
+      name: "text",
+      def: directives.text,
+      attr: name,
+      arg: name.replace(RE.bind, "")
+    };
+
+
+// v-text处理 即directives.text
+    text: {
+        bind() {
+            this.attr = 
+                this.el.nodeType === 3 ? 'data' : 'textContent';
+        },
+        update(value) {
+            this.el[this.attr] = domValue(value);
+        }
+    },    
+*/
 export default class Directive {
   constructor(descriptor, vm) {
     this.vm = vm;
@@ -11,7 +34,7 @@ export default class Directive {
     );
   }
 
-  _bind() {
+  _bind () {
     const { descriptor } = this;
     const { def } = descriptor;
     if (typeof def === "function") {
@@ -29,7 +52,7 @@ export default class Directive {
       const dir = this;
       if (this.update) {
         // 暴露出去的update方法 new Watcher的callback参数
-        this._update = function(value, oldVal) {
+        this._update = function (value, oldVal) {
           dir.update(value, oldVal);
         };
       }
@@ -50,17 +73,17 @@ export default class Directive {
   }
 
   // 废弃
-  _teardown(i) {
+  _teardown (i) {
     if (this.unbind) {
-        this.unbind()
+      this.unbind()
     }
     if (this._watcher) {
-        this._watcher.teardown()
+      this._watcher.teardown()
     }
     this.vm = this.el = this._watcher = null
   }
 
-  set(value) {
-      this._watcher.set(value);
+  set (value) {
+    this._watcher.set(value);
   }
 }
