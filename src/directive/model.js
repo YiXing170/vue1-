@@ -3,20 +3,20 @@ import { on, off, domValue } from "../utils";
 const handlers = {
     // <input type="text" />
     text: {
-        bind() {
+        bind () {
             const self = this;
-            this.listener = function() {
+            this.listener = function () {
                 // self: Directive
                 // this: Element
-                self.set(this.value);
+                self.set(this.value); // 触发了set
             };
             // lazy -> change
             on(this.el, 'input', this.listener);
         },
-        update(value) {
+        update (value) {
             this.el.value = domValue(value);
         },
-        unbind() {
+        unbind () {
             off(this.el, 'input', this.listener);
         }
     },
@@ -26,7 +26,7 @@ const handlers = {
 };
 
 export default {
-    bind() {
+    bind () {
         const el = this.el;
         const tag = el.tagName.toLowerCase();
         let handler;

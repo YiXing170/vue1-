@@ -6,6 +6,24 @@ let uid = 0;
 // 订阅者
 // 一个exp可能会涉及多个state。如：name + age
 // 每个state对应一个Dep。所以该watcher需要订阅多个Dep
+
+
+// compile那边的设置
+// const watcher = (this._watcher = new Watcher(
+//     this.vm,
+//     this.expression,
+//     this._update,
+//     {
+//       filters: this.filters
+//     }
+//   ));
+
+//   // 第一次更新渲染
+//   if (this.update) {
+//     this.update(watcher.value);
+//   }
+
+
 export default class Watcher {
     constructor(vm, expOrFn, callback, options) {
         this.id = uid++;
@@ -34,10 +52,10 @@ export default class Watcher {
             this.getter = expOrFn;
             this.setter = undefined;
         } else {
-            const res = parseExpression(expOrFn);
+            const res = parseExpression(expOrFn);  // {get :new Function(`with(this) { return ${body} }`);}
             this.getter = res.get;
             this.setter = value => {
-                // 这个有点问题...
+                // 这个有点问题...  我觉得没问题
                 vm[expOrFn] = value;
             };
         }
@@ -55,7 +73,7 @@ export default class Watcher {
         Dep.target = this;
         let value;
         try {
-            value = this.getter.call(vm, vm);
+            value = this.getter.call(vm, vm);  // 得到表达式的值，利用with 语句，触发了创建dep
         } catch (e) {
             value = void 0;
         }
@@ -69,7 +87,7 @@ export default class Watcher {
     }
 
     set (value) {
-        this.setter.call(this.vm, value);
+        this.setter.call(this.vm, value);  // 触发更新
     }
 
     update () {

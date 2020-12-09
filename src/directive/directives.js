@@ -17,11 +17,11 @@ const PRIORITY = {
 export default {
     // v-text处理
     text: {
-        bind() {
-            this.attr = 
+        bind () {
+            this.attr =
                 this.el.nodeType === 3 ? 'data' : 'textContent';
         },
-        update(value) {
+        update (value) {
             this.el[this.attr] = domValue(value);
         }
     },
@@ -29,7 +29,8 @@ export default {
     // v-on
     on: {
         priority: PRIORITY.on,
-        update(handler) {
+        // 已经绑定事件，更新事件
+        update (handler) {
             const { el, descriptor } = this;
             if (this.handler) {
                 off(el, descriptor.arg, this.handler);
@@ -37,7 +38,8 @@ export default {
             this.handler = handler;
             on(el, descriptor.arg, this.handler);
         },
-        unbind() {
+        //解绑
+        unbind () {
             if (this.handler) {
                 off(this.el, this.descriptor.arg, this.handler);
             }
@@ -46,14 +48,14 @@ export default {
 
     // v-html
     html: {
-        update(value) {
+        update (value) {
             this.el.innerHTML = domValue(value);
         }
     },
 
     // v-show
     show: {
-        update(value) {
+        update (value) {
             this.el.style.display = !!value ? '' : 'none';
         }
     },
@@ -61,11 +63,11 @@ export default {
     // v-bind
     bind: {
         priority: PRIORITY.bind,
-        bind() {
+        bind () {
             // 要bind的attr属性名
             this.attr = this.descriptor.arg;
         },
-        update(value) {
+        update (value) {
             // 直接写成设置attr
             this.el.setAttribute(this.attr, value);
             // 父子组件传参待补充

@@ -192,6 +192,8 @@ function compileTextNode (node, vm) {
     }
   }
 
+
+  // 作用是。。
   nextTick(() => {
     node.replaceWith(frag);
   });
