@@ -19,7 +19,7 @@ export function compile (vm, el, isFor = false) {
     let dir, descriptor;
     while (des.length) {
       descriptor = des.shift();
-      dir = new Directive(descriptor, vm);
+      dir = new Directive(descriptor, vm);  // 执行指令
       dir._bind(); // 指令绑定起来: 创建watcher去订阅dep
       descriptor.vm._directives.push(dir);
     }
